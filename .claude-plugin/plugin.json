@@ -1,0 +1,24 @@
+{
+  "name": "strategy-pack",
+  "description": "Two Claude Code subagents for solo/small teams: business-critic (daily devil's-advocate against your business plan with web-search evidence) and project-pm (cross-doc alignment auditor for distributed BUSINESS / ROADMAP / TODO / domain backlogs). Both read-only.",
+  "version": "0.1.0",
+  "author": {
+    "name": "kyoon3",
+    "url": "https://github.com/kyoon3"
+  },
+  "homepage": "https://github.com/kyoon3/claude-strategy-pack",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kyoon3/claude-strategy-pack.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "business",
+    "strategy",
+    "project-management",
+    "alignment",
+    "drift-detection",
+    "solo-founder",
+    "devils-advocate"
+  ]
+}

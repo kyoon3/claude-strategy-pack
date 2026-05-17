@@ -1,6 +1,6 @@
 {
   "name": "strategy-pack",
-  "description": "Two Claude Code subagents for solo/small teams: business-critic (daily devil's-advocate against your business plan with web-search evidence) and project-pm (cross-doc alignment auditor for distributed BUSINESS / ROADMAP / TODO / domain backlogs). Both read-only.",
+  "description": "Two read-only agents for solo founders: /business-critic (daily devil's-advocate vs your plan, web-search evidence) + /pm (weekly cross-doc alignment auditor).",
   "version": "0.1.0",
   "author": {
     "name": "kyoon3",

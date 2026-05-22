@@ -33,14 +33,21 @@ Clone this repo and copy `agents/*.md` + `commands/*.md` into your project's `.c
 ## Usage
 
 ```
-/business-critic                 # daily critique pass
+/business-critic                 # daily critique pass (chat output only)
 /business-critic "focus pricing" # weight a specific dimension
+/business-critic pr              # also open a draft GitHub PR with the findings
+/business-critic pr focus pricing  # both options combine
 
-/pm                              # weekly alignment sync
+/pm                              # weekly alignment sync (chat output only)
 /pm "focus on <initiative>"      # weight a cross-domain initiative
+/pm pr                           # also open a draft GitHub PR with the report
 ```
 
-Both commands accept an optional focus arg.
+Both commands accept an optional focus arg. Pass the literal token `pr` to additionally
+save the findings to `reports/<agent>/<timestamp>.md` and open a **draft** PR against the
+current repo's default branch — useful for scheduled routines so the output becomes a
+GitHub notification + persistent artifact instead of scrolling chat. Requires `gh` to be
+authenticated; if not, the command falls back to chat-only and tells you why.
 
 ### Recommended cadence
 

@@ -1,7 +1,7 @@
 {
   "name": "strategy-pack",
   "description": "Two read-only agents for solo founders: /business-critic (daily devil's-advocate vs your plan, web-search evidence) + /pm (weekly cross-doc alignment auditor).",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "kyoon3",
     "url": "https://github.com/kyoon3"

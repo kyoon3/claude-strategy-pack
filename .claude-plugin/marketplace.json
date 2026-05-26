@@ -9,8 +9,8 @@
     {
       "name": "strategy-pack",
       "source": {
-        "source": "github",
-        "repo": "kyoon3/claude-strategy-pack"
+        "source": "url",
+        "url": "https://github.com/kyoon3/claude-strategy-pack.git"
       },
       "description": "Two strategy agents for solo founders: /business-critic (daily devil's-advocate vs your plan, web-search evidence, always opens a draft PR with findings) + /pm (weekly cross-doc alignment auditor)."
     }

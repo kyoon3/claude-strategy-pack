@@ -1,0 +1,18 @@
+{
+  "name": "kyoon3",
+  "description": "kyoon3's strategy-focused Claude Code plugins.",
+  "owner": {
+    "name": "kyoon3",
+    "url": "https://github.com/kyoon3"
+  },
+  "plugins": [
+    {
+      "name": "strategy-pack",
+      "source": {
+        "source": "github",
+        "repo": "kyoon3/claude-strategy-pack"
+      },
+      "description": "Two strategy agents for solo founders: /business-critic (daily devil's-advocate vs your plan, web-search evidence, always opens a draft PR with findings) + /pm (weekly cross-doc alignment auditor)."
+    }
+  ]
+}

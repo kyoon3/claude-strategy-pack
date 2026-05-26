@@ -1,16 +1,13 @@
 {
   "name": "strategy-pack",
-  "description": "Two read-only agents for solo founders: /business-critic (daily devil's-advocate vs your plan, web-search evidence) + /pm (weekly cross-doc alignment auditor).",
-  "version": "0.2.0",
+  "description": "Two strategy agents for solo founders: /business-critic (daily devil's-advocate vs your plan, web-search evidence, always opens a draft PR with findings) + /pm (weekly cross-doc alignment auditor).",
+  "version": "0.3.0",
   "author": {
     "name": "kyoon3",
     "url": "https://github.com/kyoon3"
   },
   "homepage": "https://github.com/kyoon3/claude-strategy-pack",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/kyoon3/claude-strategy-pack.git"
-  },
+  "repository": "https://github.com/kyoon3/claude-strategy-pack.git",
   "license": "MIT",
   "keywords": [
     "business",

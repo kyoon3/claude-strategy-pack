@@ -49,6 +49,17 @@ That's the whole loop: a citation-backed hole in your own plan, the fix already 
 
 `product-advisor` is the read-only cousin: same diagnosis, but it hands you the advice as a report-file PR instead of editing — for when you want to decide the moves yourself.
 
+## Use case — a week in the life
+
+You're a solo founder. Your strategy lives in `BUSINESS.md` + `ROADMAP.md`, your work in `TODO.md` + a few `todo-*.md` backlogs.
+
+- **Monday morning.** You cut your price in `BUSINESS.md` to chase signups. Tuesday 6am, `business-critic` (scheduled daily) opens a PR: "🔴 the new price puts your unit margin negative at current LLM cost — here's the math, here's the source." You'd have shipped that. You don't.
+- **Wednesday–Friday.** You merge five feature PRs. Your `TODO.md` still lists three of them as open, and a backlog references the old phase name. You don't notice — you're heads-down building.
+- **Friday evening.** `pm` (scheduled) opens a PR: it read `ROADMAP.md`, diffed the week's commits, and reconciled the backlogs — deleted the shipped tasks, fixed the phase name, bumped the API doc date. You skim the diff on your phone, merge, done. No Sunday-night doc-cleanup ritual.
+- **Before a phase gate.** You manually run `/product-advisor`. It's read-only on purpose: you want the "are we actually ready for Phase C?" diagnosis as advice, not auto-edits, because the call is yours. It hands you a report PR listing the two prerequisites still unowned in any backlog.
+
+The pattern: `business-critic` keeps your *plan* honest against the market, `pm` keeps your *docs* honest against your plan, and `product-advisor` is the manual read-only check for moments you want to think before anything moves.
+
 ## Installation
 
 ### Via marketplace (recommended)

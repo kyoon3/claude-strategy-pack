@@ -23,6 +23,32 @@ Solo founder or 2-3 person team, three failure modes show up over and over:
 
 All three are designed to be invoked **on a cadence** and combine with the `schedule` or `loop` skills to automate. Because each always opens a draft PR, a scheduled run lands in your GitHub inbox even when you're away from the terminal.
 
+## Example — what you wake up to
+
+You schedule `business-critic` to run every morning. You're asleep. It reads your `BUSINESS.md`, runs live web searches, and at 6am opens this draft PR in your repo:
+
+> **`business-critic: 2026-05-26 — moat re-grounded after competitor pricing pivot`** · _draft_
+>
+> ### Finding 1 — 🔴 Competitive Landscape: your moat claim is factually stale
+> **Claim in `BUSINESS.md:33`:** "Competitor X (enterprise-only, $40+/mo) won't come downmarket to SMBs."
+> **Reality (sourced today):** Competitor X is now **$40/mo unlimited, 15,000+ users, self-serve SMB UI.** [[source]](https://example.com) The "enterprise-only" moat was written before their pricing pivot — it's no longer true.
+> **Falsifier:** if they ship localized personas for your market, your moat shrinks to "cheaper + one integration," which is a feature, not a moat. Verify before your next launch gate.
+> **Applied fix:** `BUSINESS.md` moat section reframed; `ROADMAP.md` competitive table corrected; a verify-by-launch TODO added.
+>
+> _3 files changed, +16 −7 — review the diff, merge if you agree._
+
+That's the whole loop: a citation-backed hole in your own plan, the fix already drafted, waiting as a reviewable diff — not a wall of chat you'll never scroll back to.
+
+`pm` works the same way on the inside of your docs. After a week of merges it opens:
+
+> **`pm: 2026-05-27 — reconcile downstream docs to shipped work`** · _draft_
+>
+> Read `ROADMAP.md` as source of truth, diffed it against the last 7 days of commits, and edited the docs that fell behind: deleted 3 shipped sprint blocks from `TODO.md`, removed the completed Phase B1 section from `todo-backend.md`, marked the `waitlist` table done in `todo-db.md`, bumped the API doc's last-reviewed date.
+>
+> _5 files changed, +26 −62 — your backlog now matches what actually shipped._
+
+`product-advisor` is the read-only cousin: same diagnosis, but it hands you the advice as a report-file PR instead of editing — for when you want to decide the moves yourself.
+
 ## Installation
 
 ### Via marketplace (recommended)

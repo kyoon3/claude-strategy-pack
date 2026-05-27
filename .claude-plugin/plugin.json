@@ -1,7 +1,7 @@
 {
   "name": "strategy-pack",
-  "description": "Two strategy agents for solo founders: /business-critic (daily devil's-advocate vs your plan, web-search evidence, always opens a draft PR with findings) + /pm (weekly cross-doc alignment auditor).",
-  "version": "0.3.0",
+  "description": "Three strategy agents for solo founders, each always opens a draft PR: /business-critic (devil's-advocate vs your plan, web-search evidence), /product-advisor (read-only cross-doc alignment advice), /pm (apply-mode reconciler — edits downstream docs to match BUSINESS.md/ROADMAP.md).",
+  "version": "0.4.0",
   "author": {
     "name": "kyoon3",
     "url": "https://github.com/kyoon3"

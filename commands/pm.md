@@ -1,26 +1,28 @@
 ---
-description: Run the project-pm subagent — cross-domain alignment sync across strategy / roadmap / per-domain backlogs / plans / API docs. Surfaces inconsistencies, orphaned commitments, and proposes follow-up plans without editing docs. Pass `pr` as an arg to also open a GitHub PR with the alignment report (useful for scheduled routines).
+description: Run the pm subagent — apply-mode doc reconciler. Reads the source-of-truth docs (BUSINESS.md / ROADMAP.md, or a doc you name) and edits the downstream docs (TODO, backlogs, plan stubs, API notes) so they agree with the source. Always opens a draft PR with the edits. For read-only advice instead of edits, use /product-advisor.
 ---
 
-Dispatch the `project-pm` subagent.
+Dispatch the `pm` subagent.
 
 Brief it like this:
 
-> Run a cross-domain alignment sync. Scan for `BUSINESS.md` / `STRATEGY.md`, `ROADMAP.md`, `TODO.md`, last ~100 lines of `SESSION_LOG.md` / `CHANGELOG.md`, then any per-domain backlog under `.claude/rules/`, `docs/`, or repo root (e.g., `todo-*.md`, `BACKLOG-*.md`). Pull the 5 most recently modified plan / spec files from `docs/plans/`, `docs/superpowers/plans/`, `plans/`, or `.specs/`. Check API contract docs (`docs/api.md`, `openapi.yaml`, etc.). Pull `git log --oneline -20` and `git log --since='2 weeks ago' --name-only` over docs paths and the main API source file for drift signal. Pick 3-5 alignment dimensions (A-H) to go deep on, not all eight. Follow the output format in your system prompt exactly. End with one suggested next move and stop.
+> Run a source-of-truth reconciliation. Treat `BUSINESS.md` / `STRATEGY.md` and `ROADMAP.md` / `PLAN.md` as authoritative (unless I name a different source below). Read them first, then scan the downstream docs: `TODO.md`, any `todo-*.md` / `BACKLOG-*.md` under `.claude/rules/` `docs/` or repo root, the 5 most recently modified plan/spec files, and API-contract docs. Pull `git log --oneline -20` + `git log --since='2 weeks ago' --name-only` over docs paths for drift signal. Follow your Reconciliation contract: diagnose first (produce the report), then EDIT the downstream docs so they agree with the source — never edit the source docs, never touch code/tests/hooks. Pick the dimensions where the source↔downstream gap is widest. If nothing needs reconciling, return the report without forcing edits. Follow the output format in your system prompt exactly.
 
-If the user passed extra args after `/pm`, append them as additional focus instructions (e.g., `/pm "focus on Instagram integration"` → weight cross-domain prerequisite checks on that initiative).
+If the user passed extra args after `/pm`, append them as additional focus instructions (e.g., `/pm "source is docs/spec.md"` → treat that file as the source of truth; `/pm "focus on the API contract"` → weight dimension that heaviest).
 
-Do not paraphrase or soften the subagent's findings — surface them verbatim. The alignment table and proposed-task blocks are meant to be copy-pasted by the user, so preserve formatting.
+Do not paraphrase or soften the subagent's findings — surface them verbatim to the user along with the PR URL.
 
-## Optional: open a GitHub PR with the alignment report
+## Always open a draft PR
 
-If the user's args contain the literal token `pr` (e.g. `/pm pr`, `/pm pr focus on Instagram`), after the subagent returns its verbatim findings, ALSO do the following — strictly in this order, stopping on the first failure:
+After the subagent returns its verbatim report, drive the following git workflow — strictly in this order, stopping on the first failure:
 
-1. **Preflight**: confirm the current working directory is a git repo (`git rev-parse --show-toplevel`), `gh` is authenticated (`gh auth status`), and the repo's default branch exists on the remote (`gh repo view --json defaultBranchRef -q .defaultBranchRef.name`). If any check fails, print the findings as normal and tell the user the PR step was skipped + why. Do NOT attempt to authenticate on the user's behalf.
-2. **Branch**: `git checkout -b chore/pm-$(date +%Y-%m-%d-%H%M)` from a clean working tree. If the tree is dirty, `git stash push -u -m "pm-pre"` first and pop after the commit. If stash fails, abort and tell the user.
-3. **Write report**: create `reports/pm/YYYY-MM-DD-HHMM.md` (mkdir -p the parent). Contents = a short header (date, focus args if any) + the subagent's full verbatim output, **including the alignment table and proposed-task blocks intact**.
-4. **Commit**: `git add reports/pm/...` then `git commit -m "chore: pm alignment report YYYY-MM-DD HH:MM"`. Do NOT bypass hooks with `--no-verify`.
-5. **Push + PR**: `git push -u origin <branch>` then `gh pr create --title "pm: <today's date>" --body "<count of inconsistencies surfaced + the most urgent proposed follow-up>" --base <default-branch> --draft`. Draft is the default because the proposed follow-ups need user adjudication before they land.
+1. **Preflight**: confirm the cwd is a git repo (`git rev-parse --show-toplevel`), `gh` is authenticated (`gh auth status`), and the default branch exists on the remote (`gh repo view --json defaultBranchRef -q .defaultBranchRef.name`). If any check fails, print the report and tell the user the PR step was skipped + why. Do NOT attempt to authenticate on the user's behalf.
+2. **Branch**: from a clean working tree, `git fetch origin <default-branch> --quiet` then `git checkout -b chore/pm-$(date +%Y-%m-%d-%H%M) origin/<default-branch>`. If the tree is dirty, `git stash push -u -m "pm-pre"` first and pop after the commit. If stash fails, abort and tell the user.
+3. **Pick mode based on what the agent did:**
+   - **Reconcile mode (preferred)** — if `git status --porcelain` shows changes, the agent edited downstream docs. Sanity-check: every changed file must be a downstream doc (`TODO.md`, `todo-*.md` / `BACKLOG-*.md`, plan/spec stubs, API-contract notes, or `SESSION_LOG.md`). **It must NOT include any source-of-truth doc** (`BUSINESS.md` / `ROADMAP.md` / `STRATEGY.md` / `PLAN.md`) unless the user explicitly named it as a target, nor any code/test/hook file. If a forbidden file changed, `git restore --staged --worktree <file>` it and warn the user — the agent broke contract.
+   - **Report fallback** — if `git status --porcelain` is empty (everything already agreed), create `reports/pm/YYYY-MM-DD-HHMM.md` with a short header + the full verbatim report. `git add reports/pm/...`. This guarantees the routine always produces a PR artifact.
+4. **Commit**: `git commit -m "docs: pm reconcile downstream docs to source $(date +%Y-%m-%d)"` for reconcile mode, or `git commit -m "docs: pm reconciliation report $(date +%Y-%m-%d-%H%M)"` for report fallback. Do NOT bypass hooks with `--no-verify`. If a project commit gate needs a review marker, satisfy it the project-documented way; if you can't, surface the blocker and stop.
+5. **Push + draft PR**: `git push -u origin <branch>` then `gh pr create --title "pm: <today's date> — <headline from the report>" --body "<the full verbatim report>" --base <default-branch> --draft`. Draft is the default — reconciliations need user adjudication before they land. Add the `pm` label if it exists; otherwise skip silently (`gh pr edit --add-label pm 2>/dev/null || true`).
 6. **Surface the PR URL** to the user as the last line of your reply. Do not enable auto-merge.
 
-If any step fails, still print the subagent's findings and end with one line explaining why the PR step was skipped.
+If any step 1-5 fails, still print the subagent's report and end with one line explaining why the PR step was skipped. **The PR is the artifact** — scheduled routines depend on it landing somewhere reviewable; never silently no-op.

@@ -1,7 +1,7 @@
 {
   "name": "strategy-pack",
-  "description": "Three strategy agents for solo founders — each opens a draft PR you review on your phone. The flow: run /business-critic first to pressure-test your plan against the live market (web-sourced devil's-advocate that edits your strategy docs when it finds a hole). Then run one of the two doc-keepers — /product-advisor for read-only alignment advice you act on yourself, or /pm to auto-reconcile your downstream docs (TODO, backlogs) with BUSINESS.md/ROADMAP.md.",
-  "version": "0.5.0",
+  "description": "Strategy agents for solo founders — each opens a draft PR you review on your phone. Run /business-critic to pressure-test your plan against the live market (web-sourced devil's-advocate that edits your strategy docs when it finds a hole). For doc alignment, run /align: it diagnoses cross-doc drift (product-advisor) then applies the fixes to your TODO/backlogs (pm) in one cycle, one PR. To debug a single stage, run /product-advisor (read-only diagnosis) or /pm (apply only) on their own.",
+  "version": "0.6.0",
   "author": {
     "name": "kyoon3",
     "url": "https://github.com/kyoon3"

@@ -2,7 +2,7 @@
 name: business-critic
 description: Devil's-advocate reviewer for your business plan that always opens a draft PR with its findings. Re-examines target positioning, market timing, competitive landscape, monetization assumptions, and activation-gate viability against current market reality (via web search). When findings warrant doc changes, applies 🔴/🟡 findings as direct edits to the strategy docs; otherwise drops the critique into a report file under reports/business-critic/. Either way the artifact is a draft PR the user can read on mobile. Tone is skeptical but specific — every doubt cites a source or a falsifiable mechanism. Use on demand, on a daily/weekly routine, or before any major strategy commit. Not a cheerleader.
 tools: Read, Grep, Glob, Edit, Write, WebSearch, WebFetch, Bash
-model: opus
+model: claude-opus-4-8
 maxTurns: 40
 ---
 

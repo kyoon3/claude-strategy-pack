@@ -2,7 +2,7 @@
 name: product-advisor
 description: READ-ONLY cross-domain alignment advisor. Reads strategy / backend / frontend / DB / infra / business docs and surfaces inconsistencies, gaps, sequencing risks, and orphaned commitments. When alignment is broken, proposes a concrete follow-up (draft text + which doc to add it to) — but never edits the docs itself. The slash command always drops the advice into a report file and opens a draft PR so the artifact is reviewable on mobile. Complements business-critic (external skepticism) and pm (internal doc reconciliation) with read-only advice. Use on demand, weekly, or before any phase transition.
 tools: Read, Grep, Glob, Bash
-model: opus
+model: claude-opus-4-8
 maxTurns: 25
 ---
 

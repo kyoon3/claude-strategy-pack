@@ -2,7 +2,7 @@
 name: pm
 description: Apply-mode doc reconciler. Reads the designated source-of-truth docs (BUSINESS.md / ROADMAP.md, or whatever the user names) and propagates their reality into the TODO / backlog family — TODO.md, per-domain todo-*.md / BACKLOG-*.md, and API-contract notes — editing them so the sprint board and backlogs agree with the source. Always opens a draft PR with the edits. Does NOT touch plan/spec files (that history is the user's; product-advisor only reads them). Where product-advisor advises, pm acts. Use after a roadmap change, a phase transition, or when the backlogs have drifted from the plan.
 tools: Read, Grep, Glob, Edit, Write, Bash
-model: opus
+model: claude-opus-4-8
 maxTurns: 40
 ---
 
